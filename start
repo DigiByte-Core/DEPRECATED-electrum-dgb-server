@@ -7,7 +7,7 @@ if [[ $PID != *[!0-9]* ]]; then
 fi
 
 
-electrum_config="/etc/electrum-drk.conf"
+electrum_config="/etc/electrum-dgb.conf"
 
 if [ ! -f $electrum_config ]; then
     echo "$electrum_config does not exist"
@@ -26,13 +26,13 @@ rmdir $path --ignore-fail-on-non-empty
 
 if [ ! -d $path ]; then
     echo "Database not found in $path."
-    read -p "Do you want to download it from the Electrum-DRK foundry to $path ? " -n 1 -r
+    read -p "Do you want to download it from the Electrum-DGB foundry to $path ? " -n 1 -r
     echo
     if [[ $REPLY =~ ^[Yy]$ ]]; then
 	mkdir -p $path
-	wget -O - "http://foundry.electrum-drk.org/leveldb-dump/electrum-fulltree-100-latest.tar.gz" | tar --extract --gunzip --strip-components 1 --directory $path --file -
+	wget -O - "http://foundry.electrum-dgb.org/leveldb-dump/electrum-fulltree-100-latest.tar.gz" | tar --extract --gunzip --strip-components 1 --directory $path --file -
     fi
 fi
 
 echo "Starting server as daemon"
-nohup /usr/bin/python -u server.py &> /var/log/electrum-drk.log &
+nohup /usr/bin/python -u server.py &> /var/log/electrum-dgb.log &

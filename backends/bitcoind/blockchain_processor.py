@@ -54,25 +54,18 @@ class BlockchainProcessor(Processor):
 
         self.dblock = threading.Lock()
 
-        if(config.get('bitcoind', 'testnet')=='1'):
-            self.bitcoind_url = 'http://%s:%s@%s:%s/' % (
-                config.get('bitcoind', 'testnet_user'),
-                config.get('bitcoind', 'testnet_password'),
-                config.get('bitcoind', 'testnet_host'),
-                config.get('bitcoind', 'testnet_port'))
-        else:
-            self.bitcoind_url = 'http://%s:%s@%s:%s/' % (
-                config.get('bitcoind', 'user'),
-                config.get('bitcoind', 'password'),
-                config.get('bitcoind', 'host'),
-                config.get('bitcoind', 'port'))
+        self.bitcoind_url = 'http://%s:%s@%s:%s/' % (
+            config.get('bitcoind', 'user'),
+            config.get('bitcoind', 'password'),
+            config.get('bitcoind', 'host'),
+            config.get('bitcoind', 'port'))
 
         while True:
             try:
                 self.bitcoind('getinfo')
                 break
             except:
-                print_log('cannot contact darkcoind...')
+                print_log('cannot contact digibyted...')
                 time.sleep(5)
                 continue
 
@@ -120,7 +113,7 @@ class BlockchainProcessor(Processor):
         try:
             respdata = urllib.urlopen(self.bitcoind_url, postdata).read()
         except:
-            print_log("error calling darkcoind")
+            print_log("error calling digibyted")
             traceback.print_exc(file=sys.stdout)
             self.shared.stop()
 
@@ -169,12 +162,7 @@ class BlockchainProcessor(Processor):
                 height = height + 1
                 header = self.get_header(height)
                 if height > 1:
-                    #assert prev_hash == header.get('prev_block_hash')
-                    if prev_hash != header.get('prev_block_hash'):
-                        # The header in file seems to be orphaned, go back
-                        height -= 2
-                        prev_hash = self.hash_header(self.read_header(height))
-                        continue
+                    assert prev_hash == header.get('prev_block_hash')
                 self.write_header(header, sync=False)
                 prev_hash = self.hash_header(header)
                 if (height % 1000) == 0:
@@ -630,7 +618,7 @@ class BlockchainProcessor(Processor):
         try:
             respdata = urllib.urlopen(self.bitcoind_url, postdata).read()
         except:
-            print_log("darkcoind error (getfullblock)")
+            print_log("digibyted error (getfullblock)")
             traceback.print_exc(file=sys.stdout)
             self.shared.stop()
 
@@ -639,7 +627,7 @@ class BlockchainProcessor(Processor):
         for ir in r:
             if ir['error'] is not None:
                 self.shared.stop()
-                print_log("Error: make sure you run darkcoind with txindex=1; use -reindex if needed.")
+                print_log("Error: make sure you run digibyted with txindex=1; use -reindex if needed.")
                 raise BaseException(ir['error'])
             rawtxdata.append(ir['result'])
         block['tx'] = rawtxdata

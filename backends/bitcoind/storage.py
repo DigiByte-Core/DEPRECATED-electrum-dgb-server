@@ -22,7 +22,6 @@ class Storage(object):
         self.shared = shared
         self.hash_list = {}
         self.parents = {}
-        self.testnet = config.get('bitcoind', 'testnet')
 
         self.test_reorgs = test_reorgs
         try:
@@ -43,12 +42,7 @@ class Storage(object):
             #traceback.print_exc(file=sys.stdout)
             print_log('initializing database')
             self.height = 0
-            if(self.testnet == '1'):
-                self.last_hash = '00000bafbc94add76cb75e2ec92894837288a481e5c005f6563d91623bf8bc2c'
-                print_log('using testnet last_hash')
-            else:
-                self.last_hash = '00000ffd590b1485b3caadc19b22e6379c733355108f107a430458cdf3407ab6'
-                print_log('using mainnet last_hash')
+            self.last_hash = '7497ea1b465eb39f1c8f507bc877078fe016d6fcb6dfad3a64c98dcc6e1e8496'
             db_version = self.db_version
             # write root
             self.put_node('', {})

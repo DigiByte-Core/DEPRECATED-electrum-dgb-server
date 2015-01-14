@@ -1,11 +1,3 @@
-Darkcoin (DRK) Electrum-server for the Electrum client
-======================================================
-Porting of the Electrum server to Darkcoin.
-Since there is no Electrum client yet, current sources work in Darkcoin TESTNET.
-Install procedure isn't changed. Website to download the leveldb not available.
-Any DRK tips here: XxEUFhbXPbuX58o1AbDqZssFebyNuBosxb
-Thanks!
-
 Electrum-server for the Electrum client
 =========================================
 
@@ -19,12 +11,12 @@ Features
     described by Alan Reiner (see the 'ultimate blockchain
     compression' thread in the Bitcointalk forum)
 
-  * The server requires darkcoind, leveldb and plyvel
+  * The server requires digibyted, leveldb and plyvel
 
   * The server code is open source. Anyone can run a server, removing
     single points of failure concerns.
 
-  * The server knows which set of Darkcoin addresses belong to the same
+  * The server knows which set of Digibyte addresses belong to the same
     wallet, which might raise concerns about anonymity. However, it
     should be possible to write clients capable of using several
     servers.

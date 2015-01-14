@@ -41,7 +41,7 @@ class IrcThread(threading.Thread):
         if not self.nick:
             self.nick = Hash(self.host)[:5].encode("hex")
         self.prepend = 'E_'
-        if config.get('server', 'coin') == 'litecoin':
+        if config.get('server', 'coin') == 'digibyte':
             self.prepend = 'EL_'
         self.pruning = config.get('server', 'backend') == 'leveldb'
         if self.pruning:
@@ -78,7 +78,7 @@ class IrcThread(threading.Thread):
             try:
                 s = socket.socket()
                 s.connect(('irc.freenode.net', 6667))
-                s.settimeout(0.3)
+                s.settimeout(0.1)
             except:
                 s.close()
                 print_log("IRC: reconnect in 10 s")
@@ -91,7 +91,7 @@ class IrcThread(threading.Thread):
             try:
                 s.send('USER electrum 0 * :' + self.host + ' ' + ircname + '\n')
                 s.send('NICK ' + self.nick + '\n')
-                s.send('JOIN #electrum-drk\n')
+                s.send('JOIN #electrum-dgb\n')
                 t = 0
 
                 while not self.processor.shared.stopped():
@@ -142,7 +142,7 @@ class IrcThread(threading.Thread):
 
                     if time.time() - t > 5*60:
                         #self.processor.push_response({'method': 'server.peers', 'params': [self.get_peers()]})
-                        s.send('NAMES #electrum-drk\n')
+                        s.send('NAMES #electrum-dgb\n')
                         t = time.time()
                         self.peers = {}
             except:

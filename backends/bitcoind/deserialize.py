@@ -376,13 +376,13 @@ def get_address_from_input_script(bytes):
         match2 = [ opcodes.OP_2, opcodes.OP_PUSHDATA4, opcodes.OP_PUSHDATA4, opcodes.OP_2, opcodes.OP_CHECKMULTISIG ]
         if match_decoded(dec2, match2):
             pubkeys = [ dec2[1][1].encode('hex'), dec2[2][1].encode('hex') ]
-            return pubkeys, signatures, hash_160_to_bc_address(hash_160(redeemScript), 5)
+            return pubkeys, signatures, hash_160_to_bc_address(hash_160(redeemScript), 9)
 
         # 2 of 3
         match2 = [ opcodes.OP_2, opcodes.OP_PUSHDATA4, opcodes.OP_PUSHDATA4, opcodes.OP_PUSHDATA4, opcodes.OP_3, opcodes.OP_CHECKMULTISIG ]
         if match_decoded(dec2, match2):
             pubkeys = [ dec2[1][1].encode('hex'), dec2[2][1].encode('hex'), dec2[3][1].encode('hex') ]
-            return pubkeys, signatures, hash_160_to_bc_address(hash_160(redeemScript), 5)
+            return pubkeys, signatures, hash_160_to_bc_address(hash_160(redeemScript), 9)
 
     return [], [], None
 
@@ -419,7 +419,7 @@ def get_address_from_output_script(bytes):
     # p2sh
     match = [ opcodes.OP_HASH160, opcodes.OP_PUSHDATA4, opcodes.OP_EQUAL ]
     if match_decoded(decoded, match):
-        addr = hash_160_to_bc_address(decoded[1][1],5)
+        addr = hash_160_to_bc_address(decoded[1][1],9)
         return addr
 
     return None

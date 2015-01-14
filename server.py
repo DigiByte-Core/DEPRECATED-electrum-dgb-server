@@ -60,21 +60,21 @@ def create_config():
     config.set('server', 'password', '')
     config.set('server', 'irc', 'no')
     config.set('server', 'irc_nick', '')
-    config.set('server', 'coin', 'darkcoin')
+    config.set('server', 'coin', 'digibyte')
     config.set('server', 'datadir', '')
 
     # use leveldb as default
     config.set('server', 'backend', 'leveldb')
     config.add_section('leveldb')
-    config.set('leveldb', 'path_fulltree', '/dev/shm/electrum-drk_db')
+    config.set('leveldb', 'path_fulltree', '/dev/shm/electrum-dgb_db')
     config.set('leveldb', 'pruning_limit', '100')
 
     for path in ('/etc/', ''):
-        filename = path + 'electrum-drk.conf'
+        filename = path + 'electrum-dgb.conf'
         attempt_read_config(config, filename)
 
     try:
-        with open('/etc/electrum-drk.banner', 'r') as f:
+        with open('/etc/electrum-dgb.banner', 'r') as f:
             config.set('server', 'banner', f.read())
     except IOError:
         pass
